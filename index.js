@@ -21,8 +21,6 @@ let ENVID = envId ? envId.toUpperCase() : undefined
 let environmentTypes = environments.static || keys(config)
 let environmentType = _.includes(environmentTypes, envId) ? envId : environments.default
 config = swapVariables(config)
-console.log(config)
-
 
 function loadConfigFile (file) {
   try {
