@@ -1,6 +1,6 @@
 {
   "name": "node-config-yaml",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Simple Yaml Config for Node.js based on config-yml package",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cryden/node-config-yml.git"
+    "url": "git+https://github.com/Cryden/node-config-yaml.git"
   },
   "keywords": [
     "Config",
@@ -26,9 +26,9 @@
   "author": "cryden",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Cryden/node-config-yml/issues"
+    "url": "https://github.com/Cryden/node-config-yaml/issues"
   },
-  "homepage": "https://github.com/Cryden/node-config-yml/config#readme",
+  "homepage": "https://github.com/Cryden/node-config-yaml/config#readme",
   "standard": {
     "globals": [
       "describe",
