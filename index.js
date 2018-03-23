@@ -43,20 +43,28 @@ function loadConfig () {
     for (let i = 0; i < files.length; i++) {
       if (files[i].endsWith('.yml')) {
         let keyName = files[i].substring(0, files[i].length - '.yml'.length)
-        if (keyName = 'config') {templ = loadConfigFile('config/' + files[i])} else {
+        if (keyName === 'config') {
+          templ = loadConfigFile('config/' + files[i])
+        } else {
           templ[keyName] = loadConfigFile('config/' + files[i])
         }
         fileCount++
       }
     }
-    if (fileCount <= 1) {multiFile = false} else {multiFile = true}
+    if (fileCount <= 1) {
+      multiFile = false
+    } else {
+      multiFile = true
+    }
     return templ
   }
 }
 
 function getEnvIdFromBranch () {
   try {
-    let branch = sh.exec('git status', { silent: true }).stdout
+    let branch = sh.exec('git status', {
+      silent: true
+    }).stdout
 
     if (!branch || _.includes(branch, 'fatal:')) {
       return
@@ -75,19 +83,19 @@ function getEnvIdFromBranch () {
     }), '-')
   } catch (e) {
     console.log('ERR: ', e)
-        // Do nothing
+    // Do nothing
   }
 }
 
 function getEnvId (obj) {
   return args.env ||
-        flow(
-            pick(keys(obj)),
-            keys,
-            head
-        )(args) ||
-        process.env.ENVIRONMENT_ID ||
-        getEnvIdFromBranch()
+    flow(
+      pick(keys(obj)),
+      keys,
+      head
+    )(args) ||
+    process.env.ENVIRONMENT_ID ||
+    getEnvIdFromBranch()
 }
 
 function substitute (file, p) {
@@ -98,7 +106,10 @@ function substitute (file, p) {
     }
     return _.get(file, term) || match
   })
-  return {success: success, replace: replaced}
+  return {
+    success: success,
+    replace: replaced
+  }
 }
 
 function transform (file, obj) {
@@ -127,7 +138,10 @@ function transform (file, obj) {
     }
     return p
   })
-  return {changed: changed, result: resultant}
+  return {
+    changed: changed,
+    result: resultant
+  }
 }
 
 function log () {
@@ -164,11 +178,9 @@ function swapVariables (configFile) {
   }
 
   let file = multiFile ? _.mapValues(configFile, readAndSwap) : configFile
-  file = _.merge(
-    {},
+  file = _.merge({},
     file || {},
-    file[environmentType] || {},
-    {
+    file[environmentType] || {}, {
       envId: envId,
       ENVID: ENVID,
       timestamp: timestamp
