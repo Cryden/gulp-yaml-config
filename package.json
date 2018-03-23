@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cryden/gulp-yaml-config.git"
+    "url": "git+https://github.com/Cryden/node-config-yml.git"
   },
   "keywords": [
     "Config",
@@ -26,9 +26,9 @@
   "author": "CRYDEsigN, Andy Day",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Cryden/gulp-yaml-config/issues"
+    "url": "https://github.com/Cryden/node-config-yml/issues"
   },
-  "homepage": "https://github.com/Cryden/gulp-yaml-config/config#readme",
+  "homepage": "https://github.com/Cryden/node-config-yml/config#readme",
   "standard": {
     "globals": [
       "describe",
