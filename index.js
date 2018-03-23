@@ -21,6 +21,8 @@ let ENVID = envId ? envId.toUpperCase() : undefined
 let environmentTypes = environments.static || keys(config)
 let environmentType = _.includes(environmentTypes, envId) ? envId : environments.default
 config = swapVariables(config)
+console.log(config)
+
 
 function loadConfigFile (file) {
   try {
@@ -38,14 +40,18 @@ function loadConfig () {
     return loadConfigFile('config.yml')
   } else {
     let templ = {}
-    multiFile = true
     let files = fs.readdirSync('config')
+    let fileCount = 0
     for (let i = 0; i < files.length; i++) {
       if (files[i].endsWith('.yml')) {
         let keyName = files[i].substring(0, files[i].length - '.yml'.length)
-        templ[keyName] = loadConfigFile('config/' + files[i])
+        if (keyName = 'config') {templ = loadConfigFile('config/' + files[i])} else {
+          templ[keyName] = loadConfigFile('config/' + files[i])
+        }
+        fileCount++
       }
     }
+    if (fileCount <= 1) {multiFile = false} else {multiFile = true}
     return templ
   }
 }
