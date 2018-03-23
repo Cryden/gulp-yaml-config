@@ -1,7 +1,7 @@
 {
-  "name": "gulp-config-yml",
+  "name": "node-config-yml",
   "version": "0.0.2",
-  "description": "Simple Yaml Config for Node.js",
+  "description": "Simple Yaml Config for Node.js based on config-yml package",
   "main": "index.js",
   "scripts": {
     "test": "standard | snazzy && mocha",
