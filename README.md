@@ -2,11 +2,11 @@
 
 ## Install
 ```
-$ yarn add node-config-yml
+$ yarn add node-config-yaml
 ```
 or
 ```
-$ npm install node-config-yml --save
+$ npm install node-config-yaml --save
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ This config can be accessed like this.
 
 ```javascript
 
-var config = require('config-yml');
+var config = require('node-config-yaml');
 
 console.log(config.app.url);
 console.log(config.app.cache);
@@ -197,7 +197,7 @@ db:
 This will yield the following:
 
 ```javascript
-var config = require('config-yml');
+var config = require('node-config-yaml');
 
 console.log(config.dns);          // feature-xyz.myapp.com
 console.log(config.app.url);      // http://feature-xyz.myapp.com
@@ -232,7 +232,7 @@ and the following app.js file:
 
 
 ```javascript
-var config = require('config-yml');
+var config = require('node-config-yaml');
 
 console.log(config.dns);
 console.log(config.app.url);

@@ -1,6 +1,6 @@
 {
-  "name": "node-config-yml",
-  "version": "0.0.2",
+  "name": "node-config-yaml",
+  "version": "0.0.4",
   "description": "Simple Yaml Config for Node.js based on config-yml package",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "Stack",
     "Deploy"
   ],
-  "author": "CRYDEsigN, Andy Day",
+  "author": "cryden",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Cryden/node-config-yml/issues"
