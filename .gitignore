@@ -42,3 +42,12 @@ config.yml
 config/
 
 *.lock
+
+temp
+temp1
+
+_index_old.js
+
+test.yml
+
+
