@@ -13,8 +13,14 @@ const yaml = require('js-yaml')
 const moment = require('moment')
 const args = require('yargs').argv
 const timestamp = moment().format('YYYYMMDDHHmmss')
-let multiFile = false
-let config = loadConfig()
+const path = require('path')
+
+var config = {}
+var options = {
+  multiFile: false,
+  environments: {}
+}
+
 let environments = config.environments || {}
 let envId = getEnvId(config)
 let ENVID = envId ? envId.toUpperCase() : undefined
@@ -22,7 +28,30 @@ let environmentTypes = environments.static || keys(config)
 let environmentType = _.includes(environmentTypes, envId) ? envId : environments.default
 config = swapVariables(config)
 
-function loadConfigFile (file) {
+/**
+ * Check exist deafult config files
+ *
+ * @returns {boolean}
+ */
+
+function checkDefaultConfig () {
+  if (fs.existsSync('config.yml') || fs.existsSync('config')) {
+    return true
+  } else {
+    return false
+  }
+}
+
+console.log('Check default config:', checkDefaultConfig())
+
+ /**
+ * Load yaml file
+ *
+ * @param {array} file
+ * @returns {obj}
+ */
+
+function loadYamlFile (file) {
   try {
     return yaml.load(fs.readFileSync(file, 'utf8'))
   } catch (e) {
@@ -33,32 +62,49 @@ function loadConfigFile (file) {
   }
 }
 
-function loadConfig () {
-  if (fs.existsSync('config.yml')) {
-    return loadConfigFile('config.yml')
-  } else {
-    let templ = {}
-    let files = fs.readdirSync('config')
-    let fileCount = 0
-    for (let i = 0; i < files.length; i++) {
-      if (files[i].endsWith('.yml')) {
-        let keyName = files[i].substring(0, files[i].length - '.yml'.length)
-        if (keyName === 'config') {
-          templ = loadConfigFile('config/' + files[i])
-        } else {
-          templ[keyName] = loadConfigFile('config/' + files[i])
+console.log('YAML test:', loadYamlFile('test.yml'))
+
+/**
+ * Load Yaml files as Config object
+ *
+ * @param {any} paths
+ * @returns {obj}
+ */
+
+function loadConfig (paths) {
+  let files = []
+
+  for (let i = 0; i < paths.length; i++) {
+    if (paths[i].endsWith('.yml')) {
+      let keyName = (/([ \w-]+?(?=\.))/.exec(paths[i])[1])
+      files[keyName] = path.join(paths[i])
+    } else {
+      let dirFiles = fs.readdirSync(path.join(paths[i]))
+      let dirPath = path.join(paths[i])
+      for (let i = 0; i < dirFiles.length; i++) {
+        if (dirFiles[i].endsWith('.yml')) {
+          let keyName = dirFiles[i].substring(0, dirFiles[i].length - '.yml'.length)
+          files[keyName] = path.join(dirPath, dirFiles[i])
         }
-        fileCount++
       }
     }
-    if (fileCount <= 1) {
-      multiFile = false
-    } else {
-      multiFile = true
-    }
-    return templ
   }
+
+  let config = {}
+
+  for (var keyName in files) {
+    if (files.hasOwnProperty(keyName)) {
+      if (keyName === 'config') {
+        config = loadYamlFile(files[keyName])
+      } else {
+        config[keyName] = loadYamlFile(files[keyName])
+      }
+    }
+  }
+  return config
 }
+
+console.log('Load config:', loadConfig(['temp1', 'temp/config.yml']))
 
 function getEnvIdFromBranch () {
   try {
@@ -148,6 +194,13 @@ function log () {
   console.log('CONFIG:', envId || '-', environmentType || '-')
 }
 
+function load (path) {
+  console.log(path)
+  config = loadConfig(path)
+  config = swapVariables(config)
+  return config
+}
+
 function requireSettings (settings) {
   let erredSettings = []
   settings = _.isString(settings) ? [settings] : settings
@@ -177,18 +230,21 @@ function swapVariables (configFile) {
     return obj
   }
 
-  let file = multiFile ? _.mapValues(configFile, readAndSwap) : configFile
+  let file = options.multiFile ? _.mapValues(configFile, readAndSwap) : configFile
   file = _.merge({},
     file || {},
     file[environmentType] || {}, {
       envId: envId,
       ENVID: ENVID,
-      timestamp: timestamp
+      timestamp: timestamp,
+      args
     })
 
   file = readAndSwap(file)
   return file
 }
-module.exports = config
-module.exports.log = log
-module.exports.require = requireSettings
+
+// module.exports.default = load('config')
+// module.exports.log = log
+// module.exports.require = requireSettings
+// module.exports.load = load
