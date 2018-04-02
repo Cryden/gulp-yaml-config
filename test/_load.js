@@ -10,6 +10,6 @@ module.exports = function (name) {
   // decache('../')
   delete require.cache[require.resolve('../')]
   sh.cp('-f', path.join(__dirname, 'configs', name + '.yml'), 'config.yml')
-
-  return require('../')
+  const config = require('../').load()
+  return config
 }

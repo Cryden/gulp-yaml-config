@@ -21,7 +21,6 @@ let options = {
 }
 
 let config = {
-  environments: {}
 }
 
 let environments = {}
@@ -71,7 +70,7 @@ function loadYamlFile (file) {
 
 function loadYamlConfig (paths) {
   paths = paths || []
-  if (paths === []) {
+  if (paths.length === 0) {
     if (checkDefaultConfig()) {
       paths.push('config.yml')
     } else {
@@ -111,7 +110,7 @@ function loadYamlConfig (paths) {
   return config
 }
 
-// loadYamlConfig(['temp1', 'temp/config.yml'])
+// loadYamlConfig([])
 // console.log('Load config:', config)
 
 /**
@@ -191,7 +190,8 @@ function log () {
   console.log('CONFIG:', environments.envId || '-', environments.environmentType || '-')
 }
 
-function load (path) {
+function load (path, option) {
+  option = options
   config = loadYamlConfig(path)
   setEnvironments(config)
   config = swapVariables(config)
@@ -274,6 +274,6 @@ function swapVariables (configFile) {
   return file
 }
 
-module.exports.default = load()
+module.exports.config = load()
 module.exports.log = log
 module.exports.load = load

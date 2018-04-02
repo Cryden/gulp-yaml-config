@@ -7,15 +7,12 @@ const _env = require('./_env.js')
 const _load = require('./_load.js')
 
 describe('Config env from branch', function () {
-  var config,
-    env,
-    clock,
-    timestamp
+  var config = _load('env')
+  var timestamp, env, clock
 
   before(function () {
     clock = sinon.useFakeTimers()
     timestamp = moment().format('YYYYMMDDHHmmss')
-    config = _load('env')
     env = _env()
   })
 

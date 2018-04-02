@@ -4,11 +4,7 @@ require('should')
 const _load = require('./_load.js')
 
 describe('Config (Basic)', function () {
-  var config
-
-  before(function () {
-    config = _load('basic')
-  })
+  var config = _load('basic')
 
   it('should have top variables', function () {
     config.var1.should.equal('val1')
