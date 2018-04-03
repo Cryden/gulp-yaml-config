@@ -1,18 +1,17 @@
 'use strict'
 
 require('should')
-const _load = require('./_load.js')
+const decache = require('decache')
+decache('js-yaml')
+decache('yargs')
+delete require.cache[require.resolve('../')]
+
+let env = 'unknown'
+process.env.ENVIRONMENT_ID = env
+let path = 'test/configs/env.yml'
+let config = require('../').load(path, {root: 'env'})
 
 describe('Config env with default override', function () {
-  var config,
-    env
-
-  before(function () {
-    env = 'unknown'
-    process.env.ENVIRONMENT_ID = env
-    config = _load('env')
-  })
-
   it('should override env variables at top', function () {
     config.setting1.should.equal('dummyVal')
   })
@@ -26,7 +25,5 @@ describe('Config env with default override', function () {
     config.settingList1[0].should.equal('one')
   })
 
-  after(function () {
-    delete process.env.ENVIRONMENT_ID
-  })
+  delete process.env.ENVIRONMENT_ID
 })

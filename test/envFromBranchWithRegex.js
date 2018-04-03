@@ -5,15 +5,11 @@ const sinon = require('sinon')
 const _env = require('./_env.js')
 const _load = require('./_load.js')
 
+var clock = sinon.useFakeTimers()
+var config = _load('env-w-regex')
+var env = _env(true)
+
 describe('Config env from branch with regex', function () {
-  var config, env, clock
-
-  before(function () {
-    clock = sinon.useFakeTimers()
-    config = _load('env-w-regex')
-    env = _env(true)
-  })
-
   it('should have env variables at top', function () {
     config.lower.should.equal(env)
     config.upper.should.equal(env.toUpperCase())

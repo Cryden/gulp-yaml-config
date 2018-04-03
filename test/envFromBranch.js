@@ -6,17 +6,14 @@ const moment = require('moment')
 const _env = require('./_env.js')
 const _load = require('./_load.js')
 
+var clock = sinon.useFakeTimers()
+var timestamp = moment().format('YYYYMMDDHHmmss')
+var config = _load('env')
+var env = _env()
+
 describe('Config env from branch', function () {
-  var config = _load('env')
-  var timestamp, env, clock
-
-  before(function () {
-    clock = sinon.useFakeTimers()
-    timestamp = moment().format('YYYYMMDDHHmmss')
-    env = _env()
-  })
-
   it('should have env variables at top', function () {
+    console.log(config.lower)
     config.lower.should.equal(env)
     config.upper.should.equal(env.toUpperCase())
     config.token.should.equal('token-' + timestamp)
@@ -34,7 +31,5 @@ describe('Config env from branch', function () {
     config.list1[2].should.equal('token-' + timestamp)
   })
 
-  after(function () {
-    clock.restore()
-  })
+  clock.restore()
 })

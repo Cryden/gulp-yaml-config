@@ -1,17 +1,17 @@
 'use strict'
 
 require('should')
-const _load = require('./_load.js')
+const decache = require('decache')
+decache('js-yaml')
+decache('yargs')
+delete require.cache[require.resolve('../')]
+
+let env = 'envvar'
+process.env.ENVIRONMENT_ID = env
+let path = 'test/configs/env.yml'
+let config = require('../').load(path, {root: 'env'})
 
 describe('Config env from env var', function () {
-  var config, env
-
-  before(function () {
-    env = 'envvar'
-    process.env.ENVIRONMENT_ID = env
-    config = _load('env')
-  })
-
   it('should have env variables at top', function () {
     config.lower.should.equal(env)
     config.upper.should.equal(env.toUpperCase())
@@ -27,7 +27,5 @@ describe('Config env from env var', function () {
     config.list1[1].should.equal(env.toUpperCase())
   })
 
-  after(function () {
-    delete process.env.ENVIRONMENT_ID
-  })
+  delete process.env.ENVIRONMENT_ID
 })

@@ -1,17 +1,17 @@
 'use strict'
 
 require('should')
-const _load = require('./_load.js')
+const decache = require('decache')
+decache('js-yaml')
+decache('yargs')
+delete require.cache[require.resolve('../')]
+
+process.argv.push('--dummy')
+let path = 'test/configs/env.yml'
+let config = require('../').load(path, {root: 'env'})
+let env = 'dummy'
 
 describe('Config env from static', function () {
-  var config, env
-
-  before(function () {
-    env = 'dummy'
-    process.argv.push('--dummy')
-    config = _load('env')
-  })
-
   it('should have env variables at top', function () {
     config.lower.should.equal(env)
     config.upper.should.equal(env.toUpperCase())
@@ -26,8 +26,6 @@ describe('Config env from static', function () {
     config.list1[0].should.equal(env)
     config.list1[1].should.equal(env.toUpperCase())
   })
-
-  after(function () {
-    process.argv.pop()
-  })
+  process.argv.pop()
+  process.argv.pop()
 })

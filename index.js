@@ -20,9 +20,7 @@ let options = {
   root: 'config'
 }
 
-let config = {
-  environments: {}
-}
+let config = {}
 
 let environments = {}
 
@@ -76,6 +74,8 @@ function loadYamlConfig (paths) {
     paths = new Array(paths)
   }
 
+  // console.log('Paths:', paths)
+
   if (paths.length === 0) {
     if (checkDefaultConfig()) {
       paths.push('config.yml')
@@ -102,23 +102,29 @@ function loadYamlConfig (paths) {
       }
     }
   }
+  // console.log('Files:', files)
   if (files === []) {
     return
   }
+  let rootConfig = {}
   for (var keyName in files) {
     if (files.hasOwnProperty(keyName)) {
       if (keyName === options.root) {
-        config = loadYamlFile(files[keyName])
+        rootConfig = loadYamlFile(files[keyName])
       } else {
         config[keyName] = loadYamlFile(files[keyName])
       }
     }
   }
+  config = Object.assign(rootConfig, config)
   return config
 }
 
 // loadYamlConfig([])
-console.log('Load config:', loadYamlConfig())
+// console.log('Load config (default):', loadYamlConfig())
+// console.log('Load config (file):', loadYamlConfig('config/basic.yml'))
+// console.log('Load config (dir):', loadYamlConfig('config'))
+// console.log('Load config (file + dir):', loadYamlConfig(['config', 'config.yml']))
 
 /**
  * Get EnvId from branch
@@ -198,7 +204,9 @@ function log () {
 }
 
 function load (path, option) {
-  option = options
+  if (typeof option === 'object') {
+    Object.assign(options, option)
+  }
   config = loadYamlConfig(path)
   setEnvironments(config)
   config = swapVariables(config)
@@ -281,6 +289,6 @@ function swapVariables (configFile) {
   return file
 }
 
-// module.exports.default = load()
+module.exports.default = {config}
 module.exports.log = log
 module.exports.load = load

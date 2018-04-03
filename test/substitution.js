@@ -2,14 +2,9 @@
 
 require('should')
 const _load = require('./_load.js')
+var config = _load('substitution')
 
 describe('Config with substitution', function () {
-  var config
-
-  before(function () {
-    config = _load('substitution')
-  })
-
   it('should substitute at 1st level', function () {
     config.sub.foo.should.equal('fooval - barfooval')
     config.sub.bar.foo.should.equal('barfooval')
