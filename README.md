@@ -1,4 +1,7 @@
-# node-config-yml - Simple Yaml Config for Node.js
+# node-config-yml
+#### Simple Yaml Config for Node.js
+
+[![Coverage Status](https://coveralls.io/repos/github/Cryden/node-config-yaml/badge.svg?branch=master)](https://coveralls.io/github/Cryden/node-config-yaml?branch=master)
 
 ## Install
 ```
@@ -6,7 +9,7 @@ $ yarn add node-config-yaml
 ```
 or
 ```
-$ npm install node-config-yaml --save
+$ npm install node-config-yaml
 ```
 
 ## Usage
@@ -255,3 +258,5 @@ https://prod.myapp.com
 redis
 MYSQL-DB-PROD
 ```
+
+## Credits:
