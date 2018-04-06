@@ -112,7 +112,7 @@ foo: bar
 ```
 ```yaml
 #file `b.yml`
-baz: ${a.foo}
+baz: ${foo}
 ```
 will get you
 ```javascript
