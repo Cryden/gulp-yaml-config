@@ -2,6 +2,7 @@
 #### Yaml Config for Node.js
 
 [![Coverage Status](https://coveralls.io/repos/github/Cryden/node-config-yaml/badge.svg?branch=master)](https://coveralls.io/github/Cryden/node-config-yaml?branch=master)
+[![Build Status](https://travis-ci.org/Cryden/node-config-yaml.svg?branch=master)](https://travis-ci.org/Cryden/node-config-yaml)
 
 ## Install
 ```
