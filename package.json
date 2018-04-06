@@ -1,7 +1,7 @@
 {
   "name": "node-config-yaml",
-  "version": "0.1.1",
-  "description": "Simple Yaml Config for Node.js based on config-yml package",
+  "version": "0.1.2",
+  "description": "Yaml Config for Node.js based on config-yml package",
   "main": "index.js",
   "scripts": {
     "test": "standard | snazzy && mocha",
@@ -39,7 +39,6 @@
     "js-yaml": "^3.6.1",
     "lodash": "^4.13.1",
     "moment": "^2.13.0",
-    "node-dir": "^0.1.17",
     "path": "^0.12.7",
     "shelljs": "^0.7.0",
     "yargs": "^4.7.1"
