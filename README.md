@@ -14,7 +14,7 @@ $ npm install node-config-yaml
 
 ## Usage
 Use config for yaml config files in Node.js projects.  For example you might have a project with the following
-~~config.yml~~ file in the project dir.
+**config.yml** file in the project dir.
 
 ```yaml
 
@@ -31,13 +31,26 @@ This config can be accessed like this.
 
 ```javascript
 
-var config = require('node-config-yaml');
+var config = require('node-config-yaml').load();
 
 console.log(config.app.url);
 console.log(config.app.cache);
 console.log(config.db.location);
 
 ```    
+You can might use:
+
+```javascript
+
+var config = require('node-config-yaml')
+
+.load() // load config from config.yml in root project directory
+.load('file') // load config from .yml file
+.load('dir') // load all .yml files in directory to config
+.load(['dir', 'file']) // load .yml files from sources to config
+.load(['some_sources'], { root: 'root_file_name' }) // load .yml files from sources to config with root_file_name as root (default: config)
+
+```
 
 ## Substitution
 You can substitute variables in the config.yml like this.
@@ -88,6 +101,25 @@ will get you
 ```javascript
 {
     a: {foo: 'bar'},
+    b: {baz: 'bar'}
+}
+```
+with root options:
+
+```yaml
+# file `a.yml`
+foo: bar
+```
+```yaml
+#file `b.yml`
+baz: ${a.foo}
+```
+will get you
+```javascript
+.load(['a.yml', 'b.yml'], { root: 'a' }
+
+{
+    foo: 'bar',
     b: {baz: 'bar'}
 }
 ```
@@ -200,7 +232,7 @@ db:
 This will yield the following:
 
 ```javascript
-var config = require('node-config-yaml');
+var config = require('node-config-yaml').load();
 
 console.log(config.dns);          // feature-xyz.myapp.com
 console.log(config.app.url);      // http://feature-xyz.myapp.com
@@ -235,7 +267,7 @@ and the following app.js file:
 
 
 ```javascript
-var config = require('node-config-yaml');
+var config = require('node-config-yaml').load();
 
 console.log(config.dns);
 console.log(config.app.url);
@@ -260,3 +292,7 @@ MYSQL-DB-PROD
 ```
 
 ## Credits:
+
+[config-yml](https://www.npmjs.com/package/config-yml)
+
+[https://github.com/Nordstrom/config](https://github.com/Nordstrom/config)
