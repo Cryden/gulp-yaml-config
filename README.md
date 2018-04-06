@@ -14,7 +14,7 @@ $ npm install node-config-yaml
 
 ## Usage
 Use config for yaml config files in Node.js projects.  For example you might have a project with the following
-config.yml file in the project dir.
+~~config.yml~~ file in the project dir.
 
 ```yaml
 
