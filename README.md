@@ -1,5 +1,5 @@
 # node-config-yml
-#### Simple Yaml Config for Node.js
+#### Yaml Config for Node.js
 
 [![Coverage Status](https://coveralls.io/repos/github/Cryden/node-config-yaml/badge.svg?branch=master)](https://coveralls.io/github/Cryden/node-config-yaml?branch=master)
 
